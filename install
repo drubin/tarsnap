@@ -13,12 +13,9 @@ echo en_US.UTF-8 UTF-8 > /etc/locale.gen
 locale-gen
 
 # Download and verify
-wget https://www.tarsnap.com/download/tarsnap-autoconf-$TARSNAP_VERSION.tgz
-hash="$(sha256sum tarsnap-autoconf-$TARSNAP_VERSION.tgz | cut -d " " -f1)"
-if [ "$hash" != "$TARSNAP_SHA256" ]; then
-    echo "Tarball downloaded from tarsnap.com failed hash check!"
-    exit 1
-fi
+wget --quiet https://www.tarsnap.com/download/tarsnap-autoconf-$TARSNAP_VERSION.tgz
+echo "$TARSNAP_SHA256  tarsnap-autoconf-$TARSNAP_VERSION.tgz" | sha256sum --check --strict --quiet
+
 
 # Install tarsnap
 tar zxf tarsnap-autoconf-$TARSNAP_VERSION.tgz
